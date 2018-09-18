@@ -1,0 +1,11 @@
+$("#globalModal").html("<%= escape_javascript(render 'departments/icon_select') %>");
+$("#globalModal").modal();
+
+
+$('a.icon-pick').click(function(e){
+  e.preventDefault();
+  var i = $(this).data('name');
+  $("#department_icon").val(i);
+  $("span.icon-span").html('<ion-icon name="'+i+'" style="font-size:30px;"></ion-icon>('+i+') ')
+  $("#globalModal").modal("hide");
+});

@@ -1,0 +1,41 @@
+<%= simple_form_for [@organization, @car] do |f| %>
+    <%= f.input :title %>
+
+    <%= f.input :vin_number %>
+
+    <%= f.input :stock_number %>
+
+    <%= f.input :msrp_price %>
+
+    <%= f.input :finance_payment %>
+
+    <%= f.input :lease_payment %>
+
+    <%= f.input :engine %>
+
+    <%= f.input :transmission %>
+
+    <%= f.input :drivetrain %>
+
+    <%= f.input :exterior %>
+
+    <%= f.input :interior %>
+
+    <%= f.input :hwy_mpg %>
+
+    <%= f.input :city_mpg %>
+
+    <%= f.input :was_scraped %>
+
+    <%= f.input :scraped_url %>
+
+    <%= f.input :carinfo_url %>
+
+    <%= f.input :is_new %>
+
+    <%= f.input :is_used %>
+
+    <%= f.input :modelcode %>
+
+    <%= f.submit %>
+<% end %>

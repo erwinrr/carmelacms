@@ -1,0 +1,99 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @car.title %>
+</p>
+
+<p>
+  <strong>Vin number:</strong>
+  <%= @car.vin_number %>
+</p>
+
+<p>
+  <strong>Stock number:</strong>
+  <%= @car.stock_number %>
+</p>
+
+<p>
+  <strong>Msrp price:</strong>
+  <%= @car.msrp_price %>
+</p>
+
+<p>
+  <strong>Finance payment:</strong>
+  <%= @car.finance_payment %>
+</p>
+
+<p>
+  <strong>Lease payment:</strong>
+  <%= @car.lease_payment %>
+</p>
+
+<p>
+  <strong>Engine:</strong>
+  <%= @car.engine %>
+</p>
+
+<p>
+  <strong>Transmission:</strong>
+  <%= @car.transmission %>
+</p>
+
+<p>
+  <strong>Drivetrain:</strong>
+  <%= @car.drivetrain %>
+</p>
+
+<p>
+  <strong>Exterior:</strong>
+  <%= @car.exterior %>
+</p>
+
+<p>
+  <strong>Interior:</strong>
+  <%= @car.interior %>
+</p>
+
+<p>
+  <strong>Hwy mpg:</strong>
+  <%= @car.hwy_mpg %>
+</p>
+
+<p>
+  <strong>City mpg:</strong>
+  <%= @car.city_mpg %>
+</p>
+
+<p>
+  <strong>Was scraped:</strong>
+  <%= @car.was_scraped %>
+</p>
+
+<p>
+  <strong>Scraped url:</strong>
+  <%= @car.scraped_url %>
+</p>
+
+<p>
+  <strong>Carinfo url:</strong>
+  <%= @car.carinfo_url %>
+</p>
+
+<p>
+  <strong>Is new:</strong>
+  <%= @car.is_new %>
+</p>
+
+<p>
+  <strong>Is used:</strong>
+  <%= @car.is_used %>
+</p>
+
+<p>
+  <strong>Modelcode:</strong>
+  <%= @car.modelcode %>
+</p>
+
+<%= link_to 'Edit', edit_organization_car_path(@organization, @car) %> |
+<%= link_to 'Back', organization_car_path(@organization, @car) %>

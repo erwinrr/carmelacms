@@ -1,0 +1,36 @@
+<p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="col-12">
+    <%= search_form_for @q, url: organization_cars_path do |f| %>
+      <div class="form-group row">
+          <div class="col-3">
+            <%= f.label :group_id_eq, "Dealership Filter" %>
+            <%= f.collection_select :group_id_eq, @organization.groups, :id, :name, {include_blank: 'All Dealerships'}, { class: 'form-control'} %>
+          </div>
+          <div class="col-3">
+            <%= f.submit class: 'btn btn-space btn-primary btn-search' %>
+          </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+<div class="row">
+  <% @cars.each do |car| %>
+    <div class="col-12 col-lg-6 col-xl-3 car-list">
+      <%= link_to organization_car_path(@organization, car) do %>
+        <div class="card vehicle" style="color:#404040;">
+          <img class="card-img-top" src="<%= car.main_image %>">
+          <div class="card-header card-header-divider pb-3" style="font-weight:500"><%= car.title %></div>
+          <div class="card-body pt-5">
+            <p><strong>Price:</strong> <%= number_to_currency(car.msrp_price)%></p>
+            <p><strong>Vin Number:</strong> <%= car.vin_number%></p>
+            <p><strong>Engine:</strong> <%= car.engine%></p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+<br>
+
+<%= link_to 'New Car', new_organization_car_path(@organization, @car) %>

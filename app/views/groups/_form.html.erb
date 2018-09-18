@@ -1,0 +1,6 @@
+<%= simple_form_for [@organization, @group] do |f| %>
+  <%= f.input :name %>
+  <%= f.input :scrape_url %>
+  <%= f.input :group_image %>
+  <%= f.submit :submit, class:"btn btn-space btn-primary" %>
+<% end %>

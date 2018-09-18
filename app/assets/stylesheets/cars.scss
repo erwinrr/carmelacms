@@ -1,0 +1,12 @@
+// Place all the styles related to the Cars controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+form#car_search .btn-search {
+  position:absolute;
+  bottom:0px;
+}
+
+form#car_search label {
+  font-size:16px;
+}

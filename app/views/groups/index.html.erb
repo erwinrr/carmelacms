@@ -1,0 +1,38 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card card-table group-index-card">
+      <div class="card-header">
+        <div class="tools">
+          <%= link_to '<span class="icon mdi mdi-plus" style="color:#4285f4;"></span>'.html_safe, new_organization_group_path(@organization)  %>
+        </div>
+        <div class="title">Dealerships</div>
+      </div>
+      <div class="card-body table-responsive">
+        <div class="container-fluid">
+        <div class="row" style="padding-top:10px;padding-bottom:10px;">
+          <% @groups.each do |group| %>
+            <div class="col-sm-6 <%= cycle('border-right', '') %>">
+              <div class="ds-title-row row">
+                <div class="col">
+                  <%= image_tag(group.group_image, :class => "img-thumbnail rounded-circle") if  group.group_image.attached? %>
+                  <%= link_to group.name, edit_organization_group_path(@organization, group) %> /
+                  <%= link_to 'Destroy', organization_customer_path(@organization, group), method: :delete, data: { confirm: 'Are you sure?' } %>
+                </div>
+              </div>
+              <div class="ds-details-row row">
+                <!-- link_to "Upward", search: {"upward_trending" => true} -->
+                <div class="col">
+                  <%= link_to icon_link('mdi-accounts', "#{group.users.with_any_role(:staff, :manager, :admin).count} users"), organization_group_users_path(@organization, group), class: "ds-details" %>
+                  <%= link_to icon_link('mdi-car', "#{group.cars.count} cars"), organization_cars_path(@organization, :q => {"group_id_eq":group.id}), class: "ds-details" %>
+                  <%= link_to icon_link('mdi-face', "#{group.users.with_role(:customer).count} customers"), root_path, class: "ds-details" %>
+                  <%= link_to icon_link('mdi-accounts-list', "#{group.departments.count} departments"), organization_group_departments_path(@organization, group), class: "ds-details" %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
