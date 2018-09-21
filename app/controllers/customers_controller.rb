@@ -5,7 +5,6 @@ class CustomersController < ApplicationController
   # GET /customers
   # GET /customers.json
   def index
-    @page_title = 'Customers'
     @customers = @organization.users.with_role(:customer)
   end
 

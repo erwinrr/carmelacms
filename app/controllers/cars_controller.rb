@@ -7,9 +7,7 @@ class CarsController < ApplicationController
   # GET /cars.json
   def index
     @q = Car.ransack(params[:q])
-    # @q = Car.where(group: params[:filter_group_id]) if params[:snapshot_group_id].present?
     @cars = @q.result
-    # binding.pry
     respond_to do |format|
       format.html { render :index }
       format.json {
