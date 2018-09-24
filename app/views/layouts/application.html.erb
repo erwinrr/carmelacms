@@ -23,16 +23,21 @@
     <div class="be-wrapper be-fixed-sidebar">
       <nav class="navbar navbar-expand fixed-top be-top-header">
         <div class="container-fluid">
-          <div class="be-navbar-header"><a href="index.html" class="navbar-brand"></a>
+          <div class="be-navbar-header"><%= link_to("", root_path, class: "navbar-brand") %>
           </div>
           <div class="be-right-navbar">
             <ul class="nav navbar-nav float-right be-user-nav">
-              <li class="nav-item dropdown"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><img src="http://pngimg.com/uploads/2pac/2pac_PNG47.png" alt="Avatar"><span class="user-name">Túpac Amaru</span></a>
+              <li class="nav-item dropdown"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><%= image_tag current_user.profile_image.variant(resize:"32x32") %><span class="user-name">Túpac Amaru</span></a>
                 <div role="menu" class="dropdown-menu">
                   <div class="user-info">
-                    <div class="user-name">Túpac Amaru</div>
+                    <div class="user-name"><%= current_user.full_name %></div>
                     <div class="user-position online">Available</div>
-                  </div><a href="pages-profile.html" class="dropdown-item"><span class="icon mdi mdi-face"></span> Account</a><a href="#" class="dropdown-item"><span class="icon mdi mdi-settings"></span> Settings</a><a href="pages-login.html" class="dropdown-item"><span class="icon mdi mdi-power"></span> Logout</a>
+                  </div>
+                    <%= link_to '<span class="icon mdi mdi-face"></span> Account'.html_safe, edit_organization_user_path(@organization, current_user), class: "dropdown-item" %>
+                    <!-- <a href="#" class="dropdown-item">
+                      <span class="icon mdi mdi-settings"></span> Settings
+                    </a> -->
+                    <%= link_to '<span class="icon mdi mdi-power"></span> Logout'.html_safe, destroy_user_session_path, class: "dropdown-item", method: :delete %>
                 </div>
               </li>
             </ul>

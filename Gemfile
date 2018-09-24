@@ -49,6 +49,8 @@ gem 'jwt', '~> 2.1'
 gem 'ransack', '~> 2.0', '>= 2.0.1'
 gem 'aws-sdk', '~> 3.0', '>= 3.0.1'
 gem 'mini_magick', '~> 4.8'
+gem 'devise_invitable', '~> 1.7', '>= 1.7.4'
+gem 'mailgun-ruby', '~> 1.1', '>= 1.1.10'
 
 
 group :development, :test do

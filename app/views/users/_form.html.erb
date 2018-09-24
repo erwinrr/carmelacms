@@ -1,0 +1,10 @@
+<%= simple_form_for [@organization, @user] do |f| %>
+  <%= image_tag @user.profile_image.variant(resize: "250x250") if  @user.profile_image.attached? %>
+  <%= f.input :first_name %>
+  <%= f.input :last_name %>
+  <%= f.input :email %>
+  <%= f.input :phone_number %>
+  <%= f.input :title %>
+  <%= f.input :profile_image %>
+  <%= f.submit :submit, class:"btn btn-space btn-primary" %>
+<% end %>

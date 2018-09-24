@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :set_organization
+
   def index
     customers = @organization.users.with_role(:customer)
     @q = @organization.users.where.not(id:customers).ransack(params[:q])
@@ -8,18 +9,38 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html { render :index }
       format.json {
-        render json: {
-           :users => @users
-        }
+        render json: @users
+
       }
     end
   end
 
+  def edit
+  end
+
+  def update
+    respond_to do |format|
+      if @user.update(user_params)
+        format.html { redirect_to organization_users_path(@organization), notice: 'User was successfully updated.' }
+      else
+        format.html { render :edit }
+      end
+    end
+  end
+
   private
+
     def set_organization
       @organization = Organization.find(params[:organization_id])
     end
+
     def set_user
       @user = User.find(params[:id])
     end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def user_params
+      params.require(:user).permit(:first_name, :last_name, :phone_number, :email, :title, :profile_image)
+    end
+
 end
