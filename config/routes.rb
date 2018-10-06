@@ -1,10 +1,17 @@
 Rails.application.routes.draw do
 
   root to: "pages#home"
-  devise_for :users
+  devise_for :users, controllers: {invitations: 'users/devise_invitations'}
 
   resources :organizations do
-    resources :users, only: [:index, :show, :update, :edit, :destroy]
+    resources :users, only: [:index, :show, :update, :edit, :destroy] do
+      collection do
+        resources :invitations, only: [:new, :create], controller: 'users/invitations'
+      end
+      member do
+        patch :invite
+      end
+    end
     resources :groups do
       resources :departments
     end

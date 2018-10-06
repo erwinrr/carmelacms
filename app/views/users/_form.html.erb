@@ -1,10 +1,16 @@
 <%= simple_form_for [@organization, @user] do |f| %>
-  <%= image_tag @user.profile_image.variant(resize: "250x250") if  @user.profile_image.attached? %>
+  <% if  @user.profile_image.attached? %>
+    <%= image_tag @user.profile_image.variant(resize: "250x250") %>
+  <% else %>
+    <%= image_tag "https://s3-us-west-1.amazonaws.com/kitfoxdesign/unknown.jpg", width:250 %>
+  <% end %>
   <%= f.input :first_name %>
   <%= f.input :last_name %>
   <%= f.input :email %>
-  <%= f.input :phone_number %>
   <%= f.input :title %>
+  <%= f.input :phone_number %>
   <%= f.input :profile_image %>
+  <%= f.association :roles, collection: @roles, as: :radio_buttons, checked:@user&.roles&.first&.id %>
+  <%= f.association :groups, collection: @groups, as: :check_boxes, label: "Dealership"  %>
   <%= f.submit :submit, class:"btn btn-space btn-primary" %>
 <% end %>

@@ -1,0 +1,10 @@
+<%= simple_form_for(@user, as: :user, method: :post, url: organization_invitations_path) do |f| %>
+  <%= f.input :first_name %>
+  <%= f.input :last_name %>
+  <%= f.input :email %>
+  <%= f.input :title %>
+  <%= f.input :phone_number %>
+  <%= f.association :roles, collection: @roles, as: :radio_buttons %>
+  <%= f.association :groups, collection: @groups, as: :check_boxes  %>
+  <%= f.submit :submit, class:"btn btn-space btn-primary", value: "Send Invitation" %>
+<% end %>

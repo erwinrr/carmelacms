@@ -6,9 +6,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
          # :registerable,
   has_one :customer
-  belongs_to :group
+  has_and_belongs_to_many :groups
   has_and_belongs_to_many :departments
-  has_one :organization, through: :group
+  has_many :organizations, through: :groups
   has_one :customer_profile
   has_one_attached :profile_image
 

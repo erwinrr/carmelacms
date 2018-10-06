@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_22_235811) do
+ActiveRecord::Schema.define(version: 2018_10_04_010429) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,6 +103,13 @@ ActiveRecord::Schema.define(version: 2018_09_22_235811) do
     t.index ["organization_id"], name: "index_groups_on_organization_id"
   end
 
+  create_table "groups_users", id: false, force: :cascade do |t|
+    t.bigint "group_id", null: false
+    t.bigint "user_id", null: false
+    t.index ["group_id", "user_id"], name: "index_groups_users_on_group_id_and_user_id"
+    t.index ["user_id", "group_id"], name: "index_groups_users_on_user_id_and_group_id"
+  end
+
   create_table "organizations", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -137,7 +144,6 @@ ActiveRecord::Schema.define(version: 2018_09_22_235811) do
     t.string "phone_number"
     t.string "session_token"
     t.text "settings"
-    t.bigint "group_id"
     t.string "title"
     t.string "invitation_token"
     t.datetime "invitation_created_at"
@@ -148,7 +154,6 @@ ActiveRecord::Schema.define(version: 2018_09_22_235811) do
     t.bigint "invited_by_id"
     t.integer "invitations_count", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["group_id"], name: "index_users_on_group_id"
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
     t.index ["invitations_count"], name: "index_users_on_invitations_count"
     t.index ["invited_by_id"], name: "index_users_on_invited_by_id"
@@ -169,5 +174,4 @@ ActiveRecord::Schema.define(version: 2018_09_22_235811) do
   add_foreign_key "customers", "organizations"
   add_foreign_key "departments", "groups"
   add_foreign_key "groups", "organizations"
-  add_foreign_key "users", "groups"
 end
