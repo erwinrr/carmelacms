@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     resources :groups do
       resources :departments
     end
+    resources :basic_forms
     resources :customers
     resources :cars
     post '/cars/scrape/' => 'cars#scrape'
@@ -27,6 +28,7 @@ Rails.application.routes.draw do
       get 'users/auth_test', to: 'sessions#auth_test'
       post 'users/sign_up', to: 'users#create'
       post 'users/forgot_password', to: 'users#forgot_password'
+      post '/basic_forms/create/', to: 'basic_forms#create'
       resources :users
     end
   end

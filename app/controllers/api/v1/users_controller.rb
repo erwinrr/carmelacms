@@ -6,15 +6,15 @@ class Api::V1::UsersController < ApplicationController
     @user = User.new(user_params)
     @user.session_token = SecureRandom.urlsafe_base64
     @user.add_role :customer
-    if @user.save
+    @group = Group.find(params[:group_id])
+    if @user.save && @user.groups << @group
       render json: {'created': true}, status: :created
     else
-
       render json: {'created': false, 'errors': @user.errors}, status: :unprocessable_entity
     end
   end
 
   def user_params
-    params.require(:user).permit(:email, :first_name, :last_name, :password, :group_id)
+    params.require(:user).permit(:email, :first_name, :last_name, :password)
   end
 end

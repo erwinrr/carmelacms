@@ -10,10 +10,12 @@ class User < ApplicationRecord
   has_and_belongs_to_many :departments
   has_many :organizations, through: :groups
   has_one :customer_profile
+  has_many :basic_forms
   has_one_attached :profile_image
 
   def as_json(options={})
-      super.as_json(options).merge({full_name: full_name, profile_image: self.profile_image.service_url})
+      pic_url = self.profile_image.attached? ? self.profile_image.service_url : 'https://s3-us-west-1.amazonaws.com/kitfoxdesign/unknown.jpg'
+      super.as_json(options).merge({full_name: full_name, profile_image: pic_url})
   end
 
   def full_name

@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <div class="title">
+          <%= @form.created_at.strftime("%b %d, %Y %I:%M %p")%> -  <%= @form.user.full_name %> - <%= @form.category %> form
+        </div>
+      </div>
+      <div class="card-body">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Question</th>
+              <th scope="col">Customer Answer</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @data.each do |label, answer| %>
+              <tr>
+                <td>
+                  <%= label %>
+                </td>
+                <td>
+                  <%= answer %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

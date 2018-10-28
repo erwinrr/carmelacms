@@ -22882,3 +22882,8 @@ fieldset[disabled] .full-calendar .fc-button.active {
 .card.card-table .card-header a span.icon.mdi.mdi-plus {
   color: #4285f4;
 }
+
+/*added for bootstrap tabs in the forms view*/
+nav.form-nav .nav-tabs .nav-link.active{
+  background-color: #f7f7f7;
+}

@@ -28,7 +28,6 @@ class GroupsController < ApplicationController
     @group = Group.new(group_params)
     @group.organization_id = current_user.organization.id
     respond_to do |format|
-      # binding.pry
       if @group.save
         format.html { redirect_to organization_groups_path(@organization), notice: 'Group was successfully created.' }
         format.json { render :show, status: :created, location: @group }
