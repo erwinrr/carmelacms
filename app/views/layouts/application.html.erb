@@ -16,7 +16,7 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag "https://unpkg.com/ionicons@4.2.2/dist/ionicons.js" %>
+    <%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.4.8/collection/icon/icon.css" %>
 
   </head>
   <body>
@@ -41,7 +41,7 @@
                     <div class="user-name"><%= current_user.full_name %></div>
                     <div class="user-position online">Available</div>
                   </div>
-                    <%= link_to '<span class="icon mdi mdi-face"></span> Account'.html_safe, edit_organization_user_path(@organization, current_user), class: "dropdown-item" %>
+                    <%= link_to '<span class="icon mdi mdi-face"></span> Account'.html_safe, edit_organization_user_path(current_user.organizations.first, current_user), class: "dropdown-item" %>
                     <!-- <a href="#" class="dropdown-item">
                       <span class="icon mdi mdi-settings"></span> Settings
                     </a> -->
