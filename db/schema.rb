@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_26_062940) do
+ActiveRecord::Schema.define(version: 2018_12_28_233052) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,15 +76,10 @@ ActiveRecord::Schema.define(version: 2018_10_26_062940) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
+    t.string "endpoint"
+    t.string "device_token"
+    t.string "device_type"
     t.index ["user_id"], name: "index_customer_profiles_on_user_id"
-  end
-
-  create_table "customers", force: :cascade do |t|
-    t.string "address"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "organization_id"
-    t.index ["organization_id"], name: "index_customers_on_organization_id"
   end
 
   create_table "departments", force: :cascade do |t|
@@ -109,6 +104,7 @@ ActiveRecord::Schema.define(version: 2018_10_26_062940) do
     t.datetime "updated_at", null: false
     t.bigint "organization_id"
     t.string "scrape_url"
+    t.string "topic_arn"
     t.index ["organization_id"], name: "index_groups_on_organization_id"
   end
 
@@ -123,6 +119,7 @@ ActiveRecord::Schema.define(version: 2018_10_26_062940) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "topic_arn"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -162,6 +159,8 @@ ActiveRecord::Schema.define(version: 2018_10_26_062940) do
     t.string "invited_by_type"
     t.bigint "invited_by_id"
     t.integer "invitations_count", default: 0
+    t.bigint "customer_profile_id"
+    t.index ["customer_profile_id"], name: "index_users_on_customer_profile_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
     t.index ["invitations_count"], name: "index_users_on_invitations_count"
@@ -181,7 +180,7 @@ ActiveRecord::Schema.define(version: 2018_10_26_062940) do
   add_foreign_key "basic_forms", "users"
   add_foreign_key "cars", "groups"
   add_foreign_key "customer_profiles", "users"
-  add_foreign_key "customers", "organizations"
   add_foreign_key "departments", "groups"
   add_foreign_key "groups", "organizations"
+  add_foreign_key "users", "customer_profiles"
 end

@@ -5,7 +5,6 @@ class User < ApplicationRecord
   devise :invitable, :database_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable
          # :registerable,
-  has_one :customer
   has_and_belongs_to_many :groups
   has_and_belongs_to_many :departments
   has_many :organizations, through: :groups
