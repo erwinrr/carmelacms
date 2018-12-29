@@ -1,8 +1,8 @@
 class Api::V1::DeviceTokensController < ApplicationController
     def set  
-      data = params[:data]
-      @user = User.find(data.user_id)
-      @user.customer_profile.device_token = data.device_token
+      binding.pry
+      @user = User.find(data_params[:user_id])
+      @user.customer_profile.device_token = data_params[:device_token]
       respond_to do |format|
         if @user.customer_profile.save
           format.json {
@@ -18,8 +18,9 @@ class Api::V1::DeviceTokensController < ApplicationController
   
     private
     #params for the service form
-    def data_parmas
-      params.permit(data: [:user_id, :device_token])
+    def data_params
+        #params.require(:device_token).permit( data: [:user_id, :device_token])
+        params.require(:device_token).permit(:user_id, :device_token)
     end
   
   end
