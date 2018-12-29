@@ -1,6 +1,5 @@
 class Api::V1::DeviceTokensController < ApplicationController
     def set  
-      binding.pry
       @user = User.find(data_params[:user_id])
       @user.customer_profile.device_token = data_params[:device_token]
       respond_to do |format|
