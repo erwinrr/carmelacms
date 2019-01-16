@@ -16,6 +16,8 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css' %>
+    <%= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js' %>
     <%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.4.8/collection/icon/icon.css" %>
 
   </head>
@@ -139,7 +141,7 @@
                     <ul class="sub-menu">
                       <li><a href="form-elements.html">Locations</a></li>
                       <li><a href="form-validation.html">Page Views</a></li>
-                      <li><a href="form-multiselect.html">Push Notifications</a></li>
+                      <li><%= link_to "Push Notifications", organization_push_notifications_path(@organization) %></li>
                     </ul>
                   </li>
                   <li class="parent"><a href="#"><i class="icon mdi mdi-case"></i><span>My Organization</span></a>

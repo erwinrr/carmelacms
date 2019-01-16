@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  push_notification_id: 1
+  user_id: 1
+  is_published: false
+  aws_message_id: MyString
+  aws_error: MyString
+
+two:
+  push_notification_id: 1
+  user_id: 1
+  is_published: false
+  aws_message_id: MyString
+  aws_error: MyString

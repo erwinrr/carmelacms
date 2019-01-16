@@ -7,10 +7,13 @@ class User < ApplicationRecord
          # :registerable,
   has_and_belongs_to_many :groups
   has_and_belongs_to_many :departments
+  has_many :push_notification_posts
+  has_many :push_notifications, through: :push_notification_posts
   has_many :organizations, through: :groups
   has_one :customer_profile
   has_many :basic_forms
   has_one_attached :profile_image
+
 
   def as_json(options={})
       pic_url = self.profile_image.attached? ? self.profile_image.service_url : 'https://s3-us-west-1.amazonaws.com/kitfoxdesign/unknown.jpg'

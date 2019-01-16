@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_28_233052) do
+ActiveRecord::Schema.define(version: 2019_01_16_073722) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -122,6 +122,39 @@ ActiveRecord::Schema.define(version: 2018_12_28_233052) do
     t.string "topic_arn"
   end
 
+  create_table "push_notification_posts", force: :cascade do |t|
+    t.boolean "is_published"
+    t.string "aws_message_id"
+    t.string "aws_error"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.bigint "push_notification_id"
+    t.index ["push_notification_id"], name: "index_push_notification_posts_on_push_notification_id"
+    t.index ["user_id"], name: "index_push_notification_posts_on_user_id"
+  end
+
+  create_table "push_notifications", force: :cascade do |t|
+    t.string "title"
+    t.text "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "organization_id"
+    t.integer "sender_id"
+    t.string "notification_type"
+    t.bigint "group_id"
+    t.index ["group_id"], name: "index_push_notifications_on_group_id"
+    t.index ["organization_id"], name: "index_push_notifications_on_organization_id"
+  end
+
+  create_table "push_notifications_users", id: false, force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "push_notification_id", null: false
+    t.string "aws_message_id"
+    t.string "aws_error"
+    t.boolean "published"
+  end
+
   create_table "roles", force: :cascade do |t|
     t.string "name"
     t.string "resource_type"
@@ -182,5 +215,9 @@ ActiveRecord::Schema.define(version: 2018_12_28_233052) do
   add_foreign_key "customer_profiles", "users"
   add_foreign_key "departments", "groups"
   add_foreign_key "groups", "organizations"
+  add_foreign_key "push_notification_posts", "push_notifications"
+  add_foreign_key "push_notification_posts", "users"
+  add_foreign_key "push_notifications", "groups"
+  add_foreign_key "push_notifications", "organizations"
   add_foreign_key "users", "customer_profiles"
 end

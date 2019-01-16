@@ -1,0 +1,14 @@
+<%= simple_form_for([@organization, @push_notification]) do |f| %>
+    <%= f.input :organization_id, input_html: {value: @organization.id}, as: :hidden%>
+    <%= f.input :sender_id, input_html: {value: current_user.id}, as: :hidden%>
+    <%= f.input :title, required: true%>
+    <%= f.input :message, required: true %>
+    <%= f.input :notification_type, as: :radio_buttons, collection: [['Dealership Wide', 'group'], ['Organization Wide','organization'], ['Select Individuals','individual']], label: 'Notification Type', checked: 'group' %>
+    <div class="group-options possible" style="display:none;">
+        <%= f.association :group, required: false, prompt: "Choose a Dealership", label: "Dealerships", selected: :first %>
+    </div>
+    <div class="ind-options possible" style="display:none;width:100%:">
+        <%= f.association :users, collection: @organization_customers, label_method: :full_name, label:"Customers" %>
+    </div>
+    <%= f.submit :submit, class:"btn btn-space btn-primary" %>
+<% end %>
