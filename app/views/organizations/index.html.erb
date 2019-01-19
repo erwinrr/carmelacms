@@ -1,27 +1,45 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Organizations</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @organizations.each do |organization| %>
-      <tr>
-        <td><%= organization.name %></td>
-        <td><%= link_to 'Show', organization %></td>
-        <td><%= link_to 'Edit', edit_organization_path(organization) %></td>
-        <td><%= link_to 'Destroy', organization, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Organization', new_organization_path %>
+<div class="row">
+  <div class="col-12">
+    <div class="card card-table">
+      <div class="card-header">
+        <div class="tools">
+          <%= link_to '<span class="icon mdi mdi-plus" style="color:#4285f4;"></span> Send'.html_safe, new_organization_path %>
+        </div>
+        <div class="title">All Organizations</div>
+      </div>
+      <div class="card-body table-responsive">
+        <table class="table table-striped table-borderless text-center">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Dealerships</th>
+              <th>Cars
+              <th>App Users</th>
+              <th>Staff</th>
+              <th>Created</th>
+            </tr>
+          </thead>
+          <tbody class="no-border-x">
+            <% if @organizations.empty? %>
+              <tr>
+                <td colspan="6">
+                  No Results Found
+                </td>
+              </tr>
+            <% end %>
+            <% @organizations.each do |org| %>
+              <tr>
+                <td><%= org.name %></td>
+                <td><%= org.groups.count %></td>
+                <td><%= org.cars.count %></td>
+                <td><%= org.users.with_role(:customer).count %></td>
+                <td><%= org.users.with_any_role(:admin, :owner, :manager, :staff).count %></td>
+                <td><%= org.created_at.strftime("%m/%d/%Y %I:%M%p") %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

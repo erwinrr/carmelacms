@@ -1,0 +1,17 @@
+<div class="nested-fields">
+    <div class="row">
+        <%= f.input :id, as: :hidden %>
+        <div class="col-12 text-right">
+            <%= link_to_remove_association "Remove Dealership", f, class: "org-create-rem-dealer" %>
+        </div>
+        <div class="col-12">
+            <%= f.input :name, label: "Dealeship Name" %>
+        </div>
+    </div>
+    <div id="Users">
+        <%= f.simple_fields_for :users do |u| %>
+            <h5 style="margin-bottom:10px;">Organization Owner:</h5>
+            <%= render 'user_fields', f: u %>
+        <% end %>
+    </div>
+</div>

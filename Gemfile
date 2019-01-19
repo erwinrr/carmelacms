@@ -52,6 +52,7 @@ gem 'mini_magick', '~> 4.8'
 gem 'devise_invitable', '~> 1.7', '>= 1.7.4'
 gem 'mailgun-ruby', '~> 1.1', '>= 1.1.10'
 gem 'webpacker', '~> 3.5', '>= 3.5.5'
+gem 'cocoon', '~> 1.2', '>= 1.2.12'
 
 
 group :development, :test do

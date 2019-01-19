@@ -1,0 +1,12 @@
+<div class="nested-fields">
+    <div class="row">
+        <% f.input :id, as: :hidden %>
+        <div class="col-12">
+            <%= f.input :first_name %>
+            <%= f.input :last_name %>
+            <%= f.input :email %>
+            <%= f.input :password, hint: false, error_html: { id: 'password_error'} %>
+            <%= f.input :password_confirmation, label: false %>            
+        </div>
+    </div>
+</div>

@@ -126,11 +126,12 @@
                       <i class="icon mdi mdi-account-circle"></i><span>Customers</span>
                     </a>
                   </li>
-                  <li class="">
+                  <!-- future update for DM -->
+                  <!-- <li class="">
                     <a href="/">
                       <i class="icon mdi mdi-email"></i><span>Messages</span>
                     </a>
-                  </li>
+                  </li> -->
                   <li class="">
                     <%= link_to icon_link('mdi-car', 'Cars'), organization_cars_path(@organization) %>
                   </li>
@@ -146,33 +147,36 @@
                   </li>
                   <li class="parent"><a href="#"><i class="icon mdi mdi-case"></i><span>My Organization</span></a>
                     <ul class="sub-menu">
-                      <li><a href="form-validation.html">Organization</a></li>
+                      <li><%= link_to "My Organization", edit_organization_path(@organization) %></li>
                       <li><%= link_to "Dealerships", organization_groups_path(@organization) %></li>
                       <li><%= link_to "Users", organization_users_path(@organization) %></li>
                     </ul>
                   </li>
-                  <li class="divider">Admin</li>
-                  <li class="parent"><a href="#"><i class="icon mdi mdi-chart"></i><span>Metrics</span></a>
-                    <ul class="sub-menu">
-                      <li><a href="email-inbox.html">Statistics</a></li>
-                      <li><a href="email-inbox.html">Actions</a></li>
-                    </ul>
-                  </li>
-                  <li class="parent"><a href="#"><i class="icon mdi mdi-folder-person"></i><span>Data</span></a>
-                    <ul class="sub-menu">
-                      <li><a href="layouts-primary-header.html">Organizations</a></li>
-                    </ul>
-                  </li>
+                  <% if current_user.has_role?(:admin) %>
+                    <li class="divider">Admin</li>
+                    <li class="parent"><a href="#"><i class="icon mdi mdi-chart"></i><span>Metrics</span></a>
+                      <ul class="sub-menu">
+                        <li><a href="email-inbox.html">Statistics</a></li>
+                        <li><a href="email-inbox.html">Actions</a></li>
+                      </ul>
+                    </li>
+                    <li class="parent"><a href="#"><i class="icon mdi mdi-folder-person"></i><span>Data</span></a>
+                      <ul class="sub-menu">
+                        <li><%= link_to "All Organizations", organizations_path %></li>
+                      </ul>
+                    </li>
+                  <% end %>
                 </ul>
               </div>
             </div>
           </div>
-          <div class="progress-widget">
+          <!-- maybe use this in the future for some sort of progress info??? -->
+          <!-- <div class="progress-widget">
             <div class="progress-data"><span class="progress-value">60%</span><span class="name">Current Project</span></div>
             <div class="progress">
               <div style="width: 60%;" class="progress-bar progress-bar-primary"></div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="be-content">

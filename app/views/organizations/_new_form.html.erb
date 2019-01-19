@@ -1,0 +1,15 @@
+<%= simple_form_for @new_organization do |f| %>
+  <%= f.input :name, label: "Organization Name" %>
+  <h5 class="card-title" style="margin-bottom:10px;">Organization Dealerships:</h5>
+  <div id="Groups">
+    <%= f.simple_fields_for :groups do |g| %>
+      <%= render 'group_fields', f: g %>
+    <% end %>
+    <%= link_to_add_association 'Add Dealership', f, :groups, class: 'btn btn-info' %>
+  </div>
+  <div class="row justify-content-end">
+    <div class="col-3">
+      <%= f.submit class: 'btn btn-info' %>
+    </div>
+  </div>
+<% end %>
