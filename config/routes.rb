@@ -30,6 +30,7 @@ Rails.application.routes.draw do
       post 'users/forgot_password', to: 'users#forgot_password'
       post '/basic_forms/create/', to: 'basic_forms#create'
       post '/device_tokens/set', to: 'device_tokens#set'
+      post '/locations/create/', to: 'locations#create'
       resources :users
     end
   end

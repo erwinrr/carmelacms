@@ -10,8 +10,9 @@ class User < ApplicationRecord
   has_many :push_notification_posts
   has_many :push_notifications, through: :push_notification_posts
   has_many :organizations, through: :groups
-  has_one :customer_profile
   has_many :basic_forms
+  has_many :locations
+  has_one :customer_profile  
   has_one_attached :profile_image
 
 
