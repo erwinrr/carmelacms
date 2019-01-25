@@ -31,9 +31,9 @@ function initMap(locations) {
 
   map.fitBounds(bounds);
 
-  var listener = google.maps.event.addListener(map, "idle", function () {
-      map.setZoom(14);
-      google.maps.event.removeListener(listener);
-  });
+  // var listener = google.maps.event.addListener(map, "idle", function () {
+  //     map.setZoom(14);
+  //     google.maps.event.removeListener(listener);
+  // });
 }
 
