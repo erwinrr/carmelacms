@@ -1,0 +1,54 @@
+<% provide :head_scripts do %>
+  <meta name='turbolinks-visit-control' content='reload'>
+    <script>
+    document.addEventListener("DOMContentLoaded", function(){
+        initMap(<%=@map_locations.to_s.html_safe %>)
+    });
+    </script>
+<% end %>
+<div class="row">
+  <div class="col-12">
+    <div class="card card-table">
+      <div class="card-header">
+        <div class="title">Mobile App User's Last Locations</div>
+      </div>
+      <div class="card-body">
+        <div id="map" style="width:100%;height:40vh;"></div>
+      </div>
+    </div>
+  </div>  
+  <div class="col-12">
+    <div class="card card-table">
+      <div class="card-header">
+        <div class="title">Mobile App Locations</div>
+      </div>
+      <div class="card-body table-responsive">
+        <table class="table table-striped table-borderless">
+          <thead>
+            <tr>
+              <th>user</th>
+              <th>address</th>
+              <th>time ago</th>
+              <th>timestamp</th>
+            </tr>
+          </thead>
+          <tbody class="no-border-x">
+            <% if @locations.empty? %>
+              <tr>
+                <td colspan="4">no results found</td>
+              </tr>
+            <% end %>
+            <% @locations.each do |location| %>
+                <tr>
+                    <td><%= location.user.full_name %></td>
+                    <td><%= location.street_number%> <%=location.street%> <%=location.town%> <%=location.state%></td>
+                    <td><%= location.created_at %></td>
+                    <td><%= location.created_at %></td>
+                </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

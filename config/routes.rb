@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     resources :basic_forms
     resources :customers
     resources :cars
+    resources :locations
     post '/cars/scrape/' => 'cars#scrape'
   end
 

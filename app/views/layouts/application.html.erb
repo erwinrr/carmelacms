@@ -15,11 +15,12 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'https://maps.googleapis.com/maps/api/js?key='+Rails.application.credentials.google_maps_api_key %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css' %>
     <%= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js' %>
     <%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.4.8/collection/icon/icon.css" %>
-
+    <%= yield(:head_scripts) %>
   </head>
   <body>
     <div class="be-wrapper be-fixed-sidebar">
@@ -140,7 +141,7 @@
                   </li>
                   <li class="parent"><a href="#"><i class="icon mdi mdi-smartphone-iphone"></i><span>Mobile App</span></a>
                     <ul class="sub-menu">
-                      <li><a href="form-elements.html">Locations</a></li>
+                      <li><%= link_to "Locations", organization_locations_path(@organization) %></li>
                       <li><a href="form-validation.html">Page Views</a></li>
                       <li><%= link_to "Push Notifications", organization_push_notifications_path(@organization) %></li>
                     </ul>
