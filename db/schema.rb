@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_23_235607) do
+ActiveRecord::Schema.define(version: 2019_01_26_004307) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -139,6 +139,26 @@ ActiveRecord::Schema.define(version: 2019_01_23_235607) do
     t.string "topic_arn"
   end
 
+  create_table "page_impressions", force: :cascade do |t|
+    t.text "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.bigint "page_id"
+    t.index ["page_id"], name: "index_page_impressions_on_page_id"
+    t.index ["user_id"], name: "index_page_impressions_on_user_id"
+  end
+
+  create_table "pages", force: :cascade do |t|
+    t.string "name"
+    t.string "slug"
+    t.integer "total_views"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "organization_id"
+    t.index ["organization_id"], name: "index_pages_on_organization_id"
+  end
+
   create_table "push_notification_posts", force: :cascade do |t|
     t.boolean "is_published"
     t.string "aws_message_id"
@@ -233,6 +253,9 @@ ActiveRecord::Schema.define(version: 2019_01_23_235607) do
   add_foreign_key "departments", "groups"
   add_foreign_key "groups", "organizations"
   add_foreign_key "locations", "users"
+  add_foreign_key "page_impressions", "pages"
+  add_foreign_key "page_impressions", "users"
+  add_foreign_key "pages", "organizations"
   add_foreign_key "push_notification_posts", "push_notifications"
   add_foreign_key "push_notification_posts", "users"
   add_foreign_key "push_notifications", "groups"

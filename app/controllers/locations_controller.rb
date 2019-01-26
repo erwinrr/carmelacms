@@ -3,10 +3,12 @@ class LocationsController < ApplicationController
     before_action :set_organization
 
     def index
-        @locations = @organization.locations
+        @locations = @organization.locations.limit(25)
         @map_locations = [];
-        @locations.each do |loc|
+        userid_locid = @organization.locations.joins(:user).group(:user_id).maximum(:id)
+        userid_locid.each do |user_id, location_id|
             c_loc = []
+            loc = Location.find(location_id)
             c_loc.push(loc.user.full_name)
             c_loc.push(loc.latitude)
             c_loc.push(loc.longitude)

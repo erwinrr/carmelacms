@@ -1,0 +1,6 @@
+<%= simple_form_for [@organization, @page] do |f| %>
+  <%= f.input :name %>
+  <%= f.input :slug %>
+  <%= f.input :screenshot %>
+  <%= f.submit :submit, class:"btn btn-space btn-primary" %>
+<% end %>

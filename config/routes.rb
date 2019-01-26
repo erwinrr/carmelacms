@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     resources :customers
     resources :cars
     resources :locations
+    resources :pages
     post '/cars/scrape/' => 'cars#scrape'
   end
 

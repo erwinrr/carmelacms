@@ -1,0 +1,25 @@
+<% if current_user.has_role?(:admin) %>
+  <div class="row" style="margin-bottom:10px;">
+    <div class="col-12 text-right">
+      <%= link_to  "+ Add Page", new_organization_page_path(@organization), {:class => "btn btn-primary"} %>
+    </div>
+  </div>
+<% end %>
+<div class="row">
+  <% @pages.each do |page| %>
+  <div class="col-lg-3">
+    <div class="card card-border-color card-border-color-primary">
+      <div class="card-header card-header-divider"><%= page.name %></div>
+      <div class="card-body">
+        <% if  page.screenshot.attached? %>
+          <%= image_tag page.screenshot.variant(resize: "300"), class:"card-img-top", style:"border: 1px solid #ccc; margin-bottom:10px;" %>
+        <% end %>
+        <p>643 page views</p>
+        <p>122 users viewed this</p>
+        <p>129 page views in the past 30 days</p>
+        <p>17 users viewed in the past 30 days</p>        
+      </div>
+    </div>
+  </div>
+  <% end %>
+</div>
