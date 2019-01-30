@@ -17,7 +17,9 @@ Rails.application.routes.draw do
     end
     resources :basic_forms
     resources :customers
-    resources :cars
+    resources :cars do 
+      resource :like, module: :cars
+    end
     resources :locations
     resources :pages
     post '/cars/scrape/' => 'cars#scrape'

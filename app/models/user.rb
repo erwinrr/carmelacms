@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_and_belongs_to_many :groups
   has_and_belongs_to_many :departments
   has_many :push_notification_posts
+  has_many :likes
   has_many :push_notifications, through: :push_notification_posts
   has_many :organizations, through: :groups
   has_many :page_impressions

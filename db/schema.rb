@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_26_004307) do
+ActiveRecord::Schema.define(version: 2019_01_30_205959) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -113,6 +113,15 @@ ActiveRecord::Schema.define(version: 2019_01_26_004307) do
     t.bigint "user_id", null: false
     t.index ["group_id", "user_id"], name: "index_groups_users_on_group_id_and_user_id"
     t.index ["user_id", "group_id"], name: "index_groups_users_on_user_id_and_group_id"
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "car_id"
+    t.bigint "user_id"
+    t.index ["car_id"], name: "index_likes_on_car_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "locations", force: :cascade do |t|
@@ -252,6 +261,8 @@ ActiveRecord::Schema.define(version: 2019_01_26_004307) do
   add_foreign_key "customer_profiles", "users"
   add_foreign_key "departments", "groups"
   add_foreign_key "groups", "organizations"
+  add_foreign_key "likes", "cars"
+  add_foreign_key "likes", "users"
   add_foreign_key "locations", "users"
   add_foreign_key "page_impressions", "pages"
   add_foreign_key "page_impressions", "users"

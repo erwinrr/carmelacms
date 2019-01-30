@@ -11,8 +11,10 @@ class CarsController < ApplicationController
     respond_to do |format|
       format.html { render :index }
       format.json {
+        @car_likes = current_user.likes.pluck(:car_id)
         render json: {
           :cars => @cars,
+          :car_likes => @car_likes,
           :max_price => Car.maximum('msrp_price'),
           :min_price => Car.minimum('msrp_price')
         }
