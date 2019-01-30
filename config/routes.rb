@@ -33,6 +33,7 @@ Rails.application.routes.draw do
       post '/basic_forms/create/', to: 'basic_forms#create'
       post '/device_tokens/set', to: 'device_tokens#set'
       post '/locations/create/', to: 'locations#create'
+      post '/page_impressions/create/', to: 'page_impressions#create'
       resources :users
     end
   end

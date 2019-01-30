@@ -14,10 +14,22 @@
         <% if  page.screenshot.attached? %>
           <%= image_tag page.screenshot.variant(resize: "300"), class:"card-img-top", style:"border: 1px solid #ccc; margin-bottom:10px;" %>
         <% end %>
-        <p>643 page views</p>
-        <p>122 users viewed this</p>
-        <p>129 page views in the past 30 days</p>
-        <p>17 users viewed in the past 30 days</p>        
+        <p>
+          <span class="mdi mdi-chart" style="margin-right:7px;"></span>
+          <%= page.page_impressions.count %> page views
+        </p>
+        <p>
+          <span class="mdi mdi-accounts" style="margin-right:7px;"></span>
+          <%= page.users.distinct.count %> viewed this
+        </p>
+        <p>
+          <span class="mdi mdi-chart" style="margin-right:7px;"></span>
+          <%= page.page_impressions.where('updated_at > ?', 30.days.ago).count %> page views in last 30 days
+        </p>
+        <p>
+          <span class="mdi mdi-accounts" style="margin-right:7px;"></span>
+          <%= page.users.distinct.where('page_impressions.updated_at > ?', 30.days.ago).count %> viewed in the last 30 days
+        </p>        
       </div>
     </div>
   </div>
