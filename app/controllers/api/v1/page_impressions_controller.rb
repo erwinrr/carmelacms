@@ -1,19 +1,24 @@
 class Api::V1::PageImpressionsController < ApplicationController
   def create
-      @page = Page.find_by(slug: page_params[:slug])
-      @page_impression = PageImpression.new(page_impression_params)
-      @page_impression.page_id = @page.id
-      respond_to do |format|
-          if @page_impression.save
-              format.json {
-                  render json: {
-                      :result => "Page Impression Saved!"
-                  }
-              }
-          else
-              format.json { render json: @basic_form.errors, status: :unprocessable_entity }
-          end
-      end
+    slug = page_params[:slug]
+    organization = current_user.organizations.first
+    if organization.pages.exists?(slug: slug)
+      @page = organization.pages.find_by(slug: slug)
+    else
+      @page = organization.pages.create(slug: slug, name: slug)
+    end
+    @page_impression = @page.page_impressions.new(page_impression_params)
+    respond_to do |format|
+        if @page_impression.save
+            format.json {
+                render json: {
+                    :result => "Page Impression Saved!"
+                }
+            }
+        else
+            format.json { render json: @basic_form.errors, status: :unprocessable_entity }
+        end
+    end
   end
 
   private
