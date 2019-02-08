@@ -109,6 +109,8 @@ class CarsController < ApplicationController
           car.is_new = is_new
           car.is_used = is_used
           car.group_id = group_id_found
+          car.year = set_year(car.title)
+          car.model = set_model(car.title)
           car.save
         end
       end
@@ -182,6 +184,72 @@ class CarsController < ApplicationController
           car.save
         end
       end
+    end
+  end
+
+  def models
+    group = current_user.groups.first
+    @models = group.cars.pluck(:model).uniq.sort
+
+    respond_to do |format|
+      format.json {
+        render json: {:models => @models}
+      }
+    end
+
+  end
+
+  def set_year(title)
+    matches = title.scan(/\b\d{4}\b/)
+    matches.each do |string|
+      if string.to_i > 1950 && string.to_i < 2025
+        return string.to_i
+      end
+    end
+  end
+  
+  def set_model(title)
+    models = ["CLA 250",
+      "GLA 250",
+      "Sprinter 2500 Cargo Van",
+      "C 300",
+      "GLC 300",
+      "Sprinter Extended Cargo Van",
+      "GLE 350",
+      "E 300",
+      "GLC 43",
+      "E 450",
+      "E 400",
+      "GLS 450",
+      "E 43",
+      "S-Class",
+      "Metris Cargo Van",
+      "Metris Passenger Van",
+      "Sprinter Cargo Van",
+      "Sprinter 4500 Cargo Van",
+      "GLC 350",
+      "Sprinter 2500 Passenger Van",
+      "C 43",
+      "E 53",
+      "E 63",
+      "SL 450",
+      "GLS 63",
+      "GLC 63",
+      "S 560",
+      "CLS 450",
+      "GLS 550",
+      "S 450",
+      "S 560",
+      "CLS 63S",
+      "G 63",
+      "GT C Roadster",
+      "C 250",
+      "E 350"]
+      models.map!(&:downcase)
+     r = Regexp.union models 
+    if title.downcase.match? r
+      str = title.downcase.match r
+      return str[0]
     end
   end
 

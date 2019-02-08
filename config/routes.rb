@@ -19,6 +19,9 @@ Rails.application.routes.draw do
     resources :customers
     resources :cars do 
       resource :like, module: :cars
+      collection do 
+        get 'models/' => 'cars#models'
+      end
     end
     resources :locations
     resources :pages
