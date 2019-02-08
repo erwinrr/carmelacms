@@ -82,9 +82,11 @@ class CarsController < ApplicationController
     is_used = params[:is_used]
     pages_obj = JSON.parse(pages_string)
     group_id_found = Group.where(scrape_url: params[:url])&.first&.id
+    binding.pry
     case params[:url]
     when 'https://www.mbofbakersfield.com'
       pages_obj.each do |page|
+        binding.pry
         newdoc = Nokogiri::HTML(page['page_html']);
         newdoc.css('table#results-page tr.hidden-xs div.vehicle').each do |vehicle|
           car = Car.new()
