@@ -5,6 +5,7 @@ class CustomersController < ApplicationController
   # GET /customers
   # GET /customers.json
   def index
+    binding.pry
     #@customers = @organization.users.with_role(:customer)
     @customers = User.all.with_role(:customer)
   end
