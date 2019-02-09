@@ -77,7 +77,6 @@ class CarsController < ApplicationController
   end
 
   def scrape
-    binding.pry
     pages_string = params[:pages]
     is_new = params[:is_new]
     is_used = params[:is_used]
