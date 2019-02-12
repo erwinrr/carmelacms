@@ -195,7 +195,7 @@ class CarsController < ApplicationController
 
   def models
     group = current_user.groups.first
-    @models = group.cars.pluck(:model).uniq.sort
+    @models = group.cars.where.not(model:nil).pluck(:model).uniq.sort
 
     respond_to do |format|
       format.json {
@@ -235,6 +235,7 @@ class CarsController < ApplicationController
       "Sprinter 4500 Cargo Van",
       "GLC 350",
       "Sprinter 2500 Passenger Van",
+      "Sprinter 2500 Crew Van",
       "C 43",
       "E 53",
       "E 63",
@@ -250,6 +251,49 @@ class CarsController < ApplicationController
       "G 63",
       "GT C Roadster",
       "C 250",
+      'S 550',
+      'CLS 550',
+      'G 65',      
+      'H2',
+      'Tundra', 
+      'Tacoma',
+      'Camaro',      
+      'Accord',
+      '1500',
+      'Enclave',              
+      'Denali',              
+      'Trailhawk',              
+      'Impreza',              
+      'Avalon',              
+      'Traverse',              
+      'Escape',              
+      'CR-V',              
+      'Prius',              
+      'XC70',              
+      'Charger',              
+      'Denali',              
+      'ES 350',              
+      '2500',              
+      'Crosstrek',              
+      'Outback',              
+      'Corolla',              
+      'RAV4',              
+      'Explorer',              
+      'Terrain',              
+      'Sonata',              
+      'Wrangler',              
+      'Frontier',              
+      'Model S',              
+      'Camry',              
+      'S90',              
+      'Journey',              
+      'civic',              
+      'Optima',              
+      'Altima',              
+      'Forester',              
+      'Legacy',              
+      'Veloster',              
+      'S60',              
       "E 350"]
       models.map!(&:downcase)
      r = Regexp.union models 
