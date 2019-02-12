@@ -82,15 +82,16 @@ class CarsController < ApplicationController
     is_used = params[:is_used]
     pages_obj = JSON.parse(pages_string)
     group_id_found = Group.where(scrape_url: params[:url])&.first&.id
+    new_cars_ids = [];
     case params[:url]
     when 'https://www.mbofbakersfield.com'
       pages_obj.each do |page|
         newdoc = Nokogiri::HTML(page['page_html']);
         newdoc.css('table#results-page tr.hidden-xs div.vehicle').each do |vehicle|
-          car = Car.new()
+          vin = vehicle.css('div.vehicle-overview div.vinstock span:nth-child(1)').text.strip.chomp.sub('VIN: ', '')
+          car = Car.find_or_initialize_by(vin_number: vin)
           car.title = vehicle.css('div.vehicle-title h2 a').text.chomp
           car.msrp_price = vehicle.css('div.our-price span.price').text.strip.chomp.delete('$,').to_i
-          car.vin_number = vehicle.css('div.vehicle-overview div.vinstock span:nth-child(1)').text.strip.chomp.sub('VIN: ', '')
           car.stock_number = vehicle.css('div.vinstock span:nth-child(2)').text.strip.chomp.sub('STOCK #: ', '')
           car.finance_payment = vehicle.css('div.finance span.price').text.strip.chomp.delete('$,').to_i
           car.lease_payment = vehicle.css('div.leasepayment span.price').text.strip.chomp.delete('$,').to_i
@@ -112,6 +113,7 @@ class CarsController < ApplicationController
           car.year = set_year(car.title)
           car.model = set_model(car.title)
           car.save
+          new_cars_ids.push(car.id)
         end
       end
     when 'https://www.sangerasubaru.com'
@@ -185,6 +187,10 @@ class CarsController < ApplicationController
         end
       end
     end
+    # after scraping new cars basically adding new cars and updating cars that match by vin.
+    # delete the diff or all the ones that were not created or updated for new or used.
+    # this leaves the ones that were manually added via the dashboard.
+    Car.all.where("was_scraped = ? and is_new = ? and id not in (?)", true, is_new, new_cars_ids).destroy_all
   end
 
   def models
