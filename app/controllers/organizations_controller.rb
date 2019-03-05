@@ -32,7 +32,7 @@ class OrganizationsController < ApplicationController
     @new_organization = Organization.new(organization_params)
     @new_organization.groups.each do |group|
       group.users.each do |user|
-        user.add_role(:owner)
+        user.add_role(:controller)
       end
     end
     respond_to do |format|

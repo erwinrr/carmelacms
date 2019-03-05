@@ -1,0 +1,6 @@
+<%= simple_form_for [@organization, @user, @comment] do |f| %>
+  <%= f.input :user_id, input_html: {value: @user.id}, as: :hidden %>
+  <%= f.input :basic_form_id, input_html: {value: @form.id}, as: :hidden %>
+  <%= f.input :text, label: 'New Comment' %>
+  <%= f.submit :submit, class:"btn btn-space btn-primary" %>
+<% end %>

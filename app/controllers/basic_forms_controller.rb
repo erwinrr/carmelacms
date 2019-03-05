@@ -7,7 +7,9 @@ class BasicFormsController < ApplicationController
   end
 
   def show
-
+    @comments = @form.comments
+    @user = current_user
+    @comment = Comment.new
   end
 
   private

@@ -30,4 +30,20 @@
       </div>
     </div>
   </div>
+  <div class="col-6">
+    <% if @comments.any? %>
+      <h3 style="margin-top:0px;">Comments</h3>
+      <% @comments.each do |comment| %>
+      <div class="card" style="border-top:5px solid #24E4FF">
+        <div class="card-body">
+          <p class="card-text"><%= comment.text %></p>
+        </div>
+        <div class="card-footer text-muted"> 
+          <%= comment.user.full_name %> - <%= comment.created_at.strftime("%m/%d/%Y") %> - <%= comment.created_at.strftime("%l:%M %P") %>
+        </div>      
+      </div>
+      <% end %>
+    <% end %>  
+    <%= render 'comment_form' %>
+  </div>
 </div>

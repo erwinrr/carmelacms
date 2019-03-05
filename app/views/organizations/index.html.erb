@@ -33,7 +33,7 @@
                 <td><%= org.groups.count %></td>
                 <td><%= org.cars.count %></td>
                 <td><%= org.users.with_role(:customer).count %></td>
-                <td><%= org.users.with_any_role(:admin, :owner, :manager, :staff).count %></td>
+                <td><%= org.users.with_any_role(:admin, :controller, :manager, :staff).count %></td>
                 <td><%= org.created_at.strftime("%m/%d/%Y %I:%M%p") %></td>
               </tr>
             <% end %>

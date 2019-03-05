@@ -15,6 +15,7 @@ class User < ApplicationRecord
   has_many :pages, through: :page_impressions
   has_many :basic_forms
   has_many :locations
+  has_many :comments
   has_one :customer_profile  
   has_one_attached :profile_image
 

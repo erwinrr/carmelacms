@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_07_003627) do
+ActiveRecord::Schema.define(version: 2019_02_22_232924) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 2019_02_07_003627) do
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.string "category"
+    t.integer "seller_id"
     t.index ["user_id"], name: "index_basic_forms_on_user_id"
   end
 
@@ -72,6 +73,16 @@ ActiveRecord::Schema.define(version: 2019_02_07_003627) do
     t.integer "year"
     t.string "model"
     t.index ["group_id"], name: "index_cars_on_group_id"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.bigint "basic_form_id"
+    t.text "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["basic_form_id"], name: "index_comments_on_basic_form_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "customer_profiles", force: :cascade do |t|
@@ -241,6 +252,7 @@ ActiveRecord::Schema.define(version: 2019_02_07_003627) do
     t.bigint "invited_by_id"
     t.integer "invitations_count", default: 0
     t.bigint "customer_profile_id"
+    t.datetime "form_attached"
     t.index ["customer_profile_id"], name: "index_users_on_customer_profile_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
@@ -260,6 +272,8 @@ ActiveRecord::Schema.define(version: 2019_02_07_003627) do
 
   add_foreign_key "basic_forms", "users"
   add_foreign_key "cars", "groups"
+  add_foreign_key "comments", "basic_forms"
+  add_foreign_key "comments", "users"
   add_foreign_key "customer_profiles", "users"
   add_foreign_key "departments", "groups"
   add_foreign_key "groups", "organizations"

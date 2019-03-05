@@ -17,14 +17,16 @@
             <thead>
               <tr>
                 <th>Date</th>
+                <th>Sales Lead</th>
                 <th>Customer</th>
+                <th class="text-center">Comments</th>
                 <th>Time</th>
               </tr>
             </thead>
             <tbody class="no-border-x">
               <% if @sales_forms.empty? %>
                 <tr>
-                  <td colspan="3">
+                  <td colspan="5">
                     No forms have been submitted yet..
                   </td>
                 </tr>
@@ -32,7 +34,9 @@
               <% @sales_forms.each do |form| %>
                 <tr>
                   <td><%= link_to form.created_at.strftime("%b %d, %Y %I:%M %p"), organization_basic_form_path(@organization, form) %></td>
+                  <td><%= form&.seller&.full_name %></td>
                   <td><%= form.user.full_name %></td>
+                  <td class="text-center"><%= form.comments.count %></td>
                   <td><%= time_ago_in_words(form.created_at) %></td>
                 </tr>
               <% end %>
@@ -55,13 +59,14 @@
               <tr>
                 <th>Date</th>
                 <th>Customer</th>
+                <th class="text-center">Comments</th>
                 <th>Time</th>
               </tr>
             </thead>
             <tbody class="no-border-x">
               <% if @service_forms.empty? %>
                 <tr>
-                  <td colspan="3">
+                  <td colspan="4">
                     No forms have been submitted yet..
                   </td>
                 </tr>
@@ -70,6 +75,7 @@
                 <tr>
                   <td><%= link_to form.created_at.strftime("%b %d, %Y %I:%M %p"), organization_basic_form_path(@organization, form) %></td>
                   <td><%= form.user.full_name %></td>
+                  <td class="text-center"><%= form.comments.count %></td>
                   <td><%= time_ago_in_words(form.created_at) %></td>
                 </tr>
               <% end %>
