@@ -5,5 +5,6 @@ class Organization < ApplicationRecord
   has_many :locations, through: :users
   has_many :push_notifications
   has_many :pages
+  has_many :basic_forms, through: :users
   accepts_nested_attributes_for :groups, reject_if: :all_blank, allow_destroy: true
 end

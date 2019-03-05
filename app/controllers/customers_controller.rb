@@ -5,8 +5,7 @@ class CustomersController < ApplicationController
   # GET /customers
   # GET /customers.json
   def index
-    #@customers = @organization.users.with_role(:customer)
-    @customers = User.all.with_role(:customer)
+    @customers = @organization.users.with_role(:customer)
   end
 
   # GET /customers/1

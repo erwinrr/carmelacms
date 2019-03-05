@@ -6,7 +6,7 @@ class CarsController < ApplicationController
   # GET /cars
   # GET /cars.json
   def index
-    @q = Car.ransack(params[:q])
+    @q = @organization.cars.ransack(params[:q])
     @cars = @q.result
     respond_to do |format|
       format.html { render :index }

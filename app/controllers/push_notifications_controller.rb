@@ -5,7 +5,7 @@ class PushNotificationsController < ApplicationController
   # GET /push_notifications
   # GET /push_notifications.json
   def index
-    @push_notifications = PushNotification.all
+    @push_notifications = @organization.push_notifications
   end
 
   # GET /push_notifications/1

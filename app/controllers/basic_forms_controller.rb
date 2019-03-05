@@ -2,8 +2,8 @@ class BasicFormsController < ApplicationController
   before_action :set_organization
   before_action :set_form, only:[:show]
   def index
-    @service_forms = BasicForm.all.where(category:"service")
-    @sales_forms = BasicForm.all.where(category:"sales")
+    @service_forms = @organization.basic_forms.where(category:"service")
+    @sales_forms = @organization.basic_forms.where(category:"sales")
   end
 
   def show
