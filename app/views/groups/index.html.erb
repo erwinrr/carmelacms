@@ -22,7 +22,7 @@
               <div class="ds-details-row row">
                 <!-- link_to "Upward", search: {"upward_trending" => true} -->
                 <div class="col">
-                  <%= link_to icon_link('mdi-accounts', "#{group.users.with_any_role(:staff, :manager, :admin).count} users"), organization_users_path(@organization), class: "ds-details" %>
+                  <%= link_to icon_link('mdi-accounts', "#{group.users.with_any_role(:admin, :controller, :manager, :staff, :sale_staff).count} users"), organization_users_path(@organization), class: "ds-details" %>
                   <%= link_to icon_link('mdi-car', "#{group.cars.count} cars"), organization_cars_path(@organization, :q => {"group_id_eq":group.id}), class: "ds-details" %>
                   <%= link_to icon_link('mdi-face', "#{group.users.with_role(:customer).count} customers"), root_path, class: "ds-details" %>
                   <%= link_to icon_link('mdi-accounts-list', "#{group.departments.count} departments"), organization_group_departments_path(@organization, group), class: "ds-details" %>
