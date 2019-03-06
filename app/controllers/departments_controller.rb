@@ -7,7 +7,7 @@ class DepartmentsController < ApplicationController
   # GET /departments.json
   def index
     # @departments = Department.includes(:users).select("departments.*, COUNT('user.id') as user_count").group(:id)
-    @departments = Department.all
+    @departments = @organization.departments
   end
 
   # GET /departments/1
