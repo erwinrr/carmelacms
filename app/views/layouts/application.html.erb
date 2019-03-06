@@ -19,7 +19,6 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css' %>
     <%= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js' %>
-    <%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.4.8/collection/icon/icon.css" %>
     <%= yield(:head_scripts) %>
   </head>
   <body>
@@ -191,4 +190,5 @@
     <div class="modal fade" id="globalModal" tabindex="-1" role="dialog" aria-labelledby="globalModalLabel" aria-hidden="true">
     </div>
   </body>
+  <%= javascript_include_tag "https://unpkg.com/ionicons@4.4.4/dist/ionicons.js" %>
 </html>
