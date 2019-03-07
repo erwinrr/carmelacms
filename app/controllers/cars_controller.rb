@@ -81,39 +81,42 @@ class CarsController < ApplicationController
     is_new = params[:is_new]
     is_used = params[:is_used]
     pages_obj = JSON.parse(pages_string)
-    group_id_found = Group.where(scrape_url: params[:url])&.first&.id
+    group_ids = Group.where(scrape_url: params[:url]).pluck(:id)
     new_cars_ids = [];
     case params[:url]
     when 'https://www.mbofbakersfield.com'
       pages_obj.each do |page|
         newdoc = Nokogiri::HTML(page['page_html']);
         newdoc.css('table#results-page tr.hidden-xs div.vehicle').each do |vehicle|
-          vin = vehicle.css('div.vehicle-overview div.vinstock span:nth-child(1)').text.strip.chomp.sub('VIN: ', '')
-          car = Car.find_or_initialize_by(vin_number: vin)
-          car.title = vehicle.css('div.vehicle-title h2 a').text.chomp
-          car.msrp_price = vehicle.css('div.our-price span.price').text.strip.chomp.delete('$,').to_i
-          car.stock_number = vehicle.css('div.vinstock span:nth-child(2)').text.strip.chomp.sub('STOCK #: ', '')
-          car.finance_payment = vehicle.css('div.finance span.price').text.strip.chomp.delete('$,').to_i
-          car.lease_payment = vehicle.css('div.leasepayment span.price').text.strip.chomp.delete('$,').to_i
-          car.engine = vehicle.css('div.options ul li:nth-child(1) span.detail-content').text.strip.chomp
-          car.transmission = vehicle.css('div.options ul li:nth-child(2) span.detail-content').text.strip.chomp
-          car.drivetrain = vehicle.css('div.options ul li:nth-child(3) span.detail-content').text.strip.chomp
-          car.exterior = vehicle.css('div.options ul li:nth-child(4) span.detail-content').text.strip.chomp
-          car.interior = vehicle.css('div.options ul li:nth-child(5) span.detail-content').text.strip.chomp
-          car.hwy_mpg = vehicle.css('div.options ul li:nth-child(6) span:nth-child(2)').text.strip.chomp.delete('MPG')
-          car.city_mpg = vehicle.css('div.options ul li:nth-child(6) span.detail-content:nth-child(4)').text.strip.chomp.delete('MPG')
-          car.main_image = vehicle.css('div.vehicle-leftcol div.vehicle-image img').attr('data-src')
-          car.was_scraped = true
-          car.scraped_url = page['page_url']
-          element = vehicle.at_css('div.vehicle-title h2 a[href]')
-          car.carinfo_url = element['href']
-          car.is_new = is_new
-          car.is_used = is_used
-          car.group_id = group_id_found
-          car.year = set_year(car.title)
-          car.model = set_model(car.title)
-          car.save
-          new_cars_ids.push(car.id)
+          group_ids.each do |gid|
+            @group = Group.find(gid);
+            vin = vehicle.css('div.vehicle-overview div.vinstock span:nth-child(1)').text.strip.chomp.sub('VIN: ', '')
+            car = group.cars.find_or_initialize_by(vin_number: vin)
+            car.title = vehicle.css('div.vehicle-title h2 a').text.chomp
+            car.msrp_price = vehicle.css('div.our-price span.price').text.strip.chomp.delete('$,').to_i
+            car.stock_number = vehicle.css('div.vinstock span:nth-child(2)').text.strip.chomp.sub('STOCK #: ', '')
+            car.finance_payment = vehicle.css('div.finance span.price').text.strip.chomp.delete('$,').to_i
+            car.lease_payment = vehicle.css('div.leasepayment span.price').text.strip.chomp.delete('$,').to_i
+            car.engine = vehicle.css('div.options ul li:nth-child(1) span.detail-content').text.strip.chomp
+            car.transmission = vehicle.css('div.options ul li:nth-child(2) span.detail-content').text.strip.chomp
+            car.drivetrain = vehicle.css('div.options ul li:nth-child(3) span.detail-content').text.strip.chomp
+            car.exterior = vehicle.css('div.options ul li:nth-child(4) span.detail-content').text.strip.chomp
+            car.interior = vehicle.css('div.options ul li:nth-child(5) span.detail-content').text.strip.chomp
+            car.hwy_mpg = vehicle.css('div.options ul li:nth-child(6) span:nth-child(2)').text.strip.chomp.delete('MPG')
+            car.city_mpg = vehicle.css('div.options ul li:nth-child(6) span.detail-content:nth-child(4)').text.strip.chomp.delete('MPG')
+            car.main_image = vehicle.css('div.vehicle-leftcol div.vehicle-image img').attr('data-src')
+            car.was_scraped = true
+            car.scraped_url = page['page_url']
+            element = vehicle.at_css('div.vehicle-title h2 a[href]')
+            car.carinfo_url = element['href']
+            car.is_new = is_new
+            car.is_used = is_used
+            car.group_id = gid
+            car.year = set_year(car.title)
+            car.model = set_model(car.title)
+            car.save
+            new_cars_ids.push(car.id)
+          end
         end
       end
     when 'https://www.sangerasubaru.com'
@@ -190,7 +193,7 @@ class CarsController < ApplicationController
     # after scraping new cars basically adding new cars and updating cars that match by vin.
     # delete the diff or all the ones that were not created or updated for new or used.
     # this leaves the ones that were manually added via the dashboard.
-    Car.all.where("was_scraped = ? and is_new = ? and id not in (?)", true, is_new, new_cars_ids).destroy_all
+    Car.all.where("was_scraped = ? and is_new = ? and id not in (?) and group_id in (?)", true, is_new, new_cars_ids, group_ids).destroy_all
   end
 
   def models

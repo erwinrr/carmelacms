@@ -8,7 +8,7 @@ Role.create!(name:"admin")
 Role.create!(name:"controller")
 Role.create!(name:"manager")
 Role.create!(name:"sale_staff")
-Role.create!(name:"service_staff")
+Role.create!(name:"staff")
 puts 'created 5 roles!'
 admin = dealership1.users.create!(email: 'admin@gmail.com', password: 'hola32', first_name: 'Erwin', last_name: 'Juarez')
 admin.add_role(:admin)
