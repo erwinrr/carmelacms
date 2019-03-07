@@ -91,7 +91,7 @@ class CarsController < ApplicationController
           group_ids.each do |gid|
             @group = Group.find(gid);
             vin = vehicle.css('div.vehicle-overview div.vinstock span:nth-child(1)').text.strip.chomp.sub('VIN: ', '')
-            car = group.cars.find_or_initialize_by(vin_number: vin)
+            car = @group.cars.find_or_initialize_by(vin_number: vin)
             car.title = vehicle.css('div.vehicle-title h2 a').text.chomp
             car.msrp_price = vehicle.css('div.our-price span.price').text.strip.chomp.delete('$,').to_i
             car.stock_number = vehicle.css('div.vinstock span:nth-child(2)').text.strip.chomp.sub('STOCK #: ', '')
