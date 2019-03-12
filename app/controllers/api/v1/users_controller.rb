@@ -7,7 +7,7 @@ class Api::V1::UsersController < ApplicationController
     @user.session_token = SecureRandom.urlsafe_base64
     @user.add_role :customer
     @group = Group.find(params[:group_id])
-    @cp = CustomerProfile.new(user_id: user.id)
+    @cp = CustomerProfile.new(user_id: @user.id)
     if @user.save && @user.groups << @group && @cp.save
       render json: {'created': true}, status: :created
     else
