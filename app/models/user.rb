@@ -16,7 +16,7 @@ class User < ApplicationRecord
   has_many :basic_forms
   has_many :locations
   has_many :comments
-  has_one :customer_profile  
+  has_one :customer_profile, dependent: :destroy  
   has_one_attached :profile_image
 
 
