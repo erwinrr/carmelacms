@@ -97,11 +97,11 @@ class CarsController < ApplicationController
             car.stock_number = vehicle.css('div.vinstock span:nth-child(2)').text.strip.chomp.sub('STOCK #: ', '')
             car.finance_payment = vehicle.css('div.finance span.price').text.strip.chomp.delete('$,').to_i
             car.lease_payment = vehicle.css('div.leasepayment span.price').text.strip.chomp.delete('$,').to_i
-            car.engine = vehicle.css('div.options ul li:nth-child(1) span.detail-content').text.strip.chomp
-            car.transmission = vehicle.css('div.options ul li:nth-child(2) span.detail-content').text.strip.chomp
-            car.drivetrain = vehicle.css('div.options ul li:nth-child(3) span.detail-content').text.strip.chomp
-            car.exterior = vehicle.css('div.options ul li:nth-child(4) span.detail-content').text.strip.chomp
-            car.interior = vehicle.css('div.options ul li:nth-child(5) span.detail-content').text.strip.chomp
+            # car.engine = vehicle.css('div.options ul li:nth-child(1) span.detail-content').text.strip.chomp
+            # car.transmission = vehicle.css('div.options ul li:nth-child(2) span.detail-content').text.strip.chomp
+            # car.drivetrain = vehicle.css('div.options ul li:nth-child(3) span.detail-content').text.strip.chomp
+            # car.exterior = vehicle.css('div.options ul li:nth-child(4) span.detail-content').text.strip.chomp
+            # car.interior = vehicle.css('div.options ul li:nth-child(5) span.detail-content').text.strip.chomp
             car.hwy_mpg = vehicle.css('div.options ul li:nth-child(6) span:nth-child(2)').text.strip.chomp.delete('MPG')
             car.city_mpg = vehicle.css('div.options ul li:nth-child(6) span.detail-content:nth-child(4)').text.strip.chomp.delete('MPG')
             car.main_image = vehicle.css('div.vehicle-leftcol div.vehicle-image img').attr('data-src')
@@ -111,6 +111,22 @@ class CarsController < ApplicationController
             car.carinfo_url = element['href']
             car.is_new = is_new
             car.is_used = is_used
+            car_options = vehicle.css('div.vehicle-content div.options ul li')
+            car_options.each do |option|
+              if option.css('span.detail-label').text.strip.downcase.include? 'engine'
+                car.engine = option.css('span.detail-content').text.strip.chomp
+              elsif option.css('span.detail-label').text.strip.downcase.include? 'trans'
+                car.transmission = option.css('span.detail-content').text.strip.chomp
+              elsif option.css('span.detail-label').text.strip.downcase.include? 'drivetrain'
+                car.drivetrain = option.css('span.detail-content').text.strip.chomp
+              elsif option.css('span.detail-label').text.strip.downcase.include? 'exterior'
+                car.exterior = option.css('span.detail-content').text.strip.chomp
+              elsif option.css('span.detail-label').text.strip.downcase.include? 'interior'
+                car.interior = option.css('span.detail-content').text.strip.chomp
+              elsif option.css('span.detail-label').text.strip.downcase.include? 'mileage'
+                car.mileage = option.css('span.detail-content').text.strip.delete(',').to_i
+              end
+            end
             car.group_id = gid
             car.year = set_year(car.title)
             car.model = set_model(car.title)
