@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_22_053147) do
+ActiveRecord::Schema.define(version: 2019_05_08_045518) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 2019_03_22_053147) do
     t.integer "year"
     t.string "model"
     t.integer "mileage"
+    t.string "make"
     t.index ["group_id"], name: "index_cars_on_group_id"
   end
 
@@ -98,11 +99,12 @@ ActiveRecord::Schema.define(version: 2019_03_22_053147) do
 
   create_table "departments", force: :cascade do |t|
     t.string "name"
-    t.string "icon"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "group_id"
+    t.bigint "icon_id"
     t.index ["group_id"], name: "index_departments_on_group_id"
+    t.index ["icon_id"], name: "index_departments_on_icon_id"
   end
 
   create_table "departments_users", id: false, force: :cascade do |t|
@@ -129,6 +131,13 @@ ActiveRecord::Schema.define(version: 2019_03_22_053147) do
     t.index ["user_id", "group_id"], name: "index_groups_users_on_user_id_and_group_id"
   end
 
+  create_table "icons", force: :cascade do |t|
+    t.string "name"
+    t.string "set"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "likes", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -153,6 +162,20 @@ ActiveRecord::Schema.define(version: 2019_03_22_053147) do
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.index ["user_id"], name: "index_locations_on_user_id"
+  end
+
+  create_table "makes", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "models", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "make_id"
+    t.index ["make_id"], name: "index_models_on_make_id"
   end
 
   create_table "organizations", force: :cascade do |t|
@@ -277,10 +300,12 @@ ActiveRecord::Schema.define(version: 2019_03_22_053147) do
   add_foreign_key "comments", "users"
   add_foreign_key "customer_profiles", "users"
   add_foreign_key "departments", "groups"
+  add_foreign_key "departments", "icons"
   add_foreign_key "groups", "organizations"
   add_foreign_key "likes", "cars"
   add_foreign_key "likes", "users"
   add_foreign_key "locations", "users"
+  add_foreign_key "models", "makes"
   add_foreign_key "page_impressions", "pages"
   add_foreign_key "page_impressions", "users"
   add_foreign_key "pages", "organizations"

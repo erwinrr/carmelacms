@@ -1,0 +1,5 @@
+<%= simple_form_for [@make] do |f| %>
+  <%= f.input :name %>
+  <%= f.association :models, collection: @models, as: :check_boxes %>
+  <%= f.submit :submit, class:"btn btn-space btn-primary" %>
+<% end %>

@@ -19,6 +19,7 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css' %>
     <%= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js' %>
+    <%= javascript_include_tag 'https://use.fontawesome.com/cdd722c408.js' %>
     <%= yield(:head_scripts) %>
   </head>
   <body>
@@ -164,6 +165,8 @@
                     <li class="parent"><a href="#"><i class="icon mdi mdi-folder-person"></i><span>Data</span></a>
                       <ul class="sub-menu">
                         <li><%= link_to "All Organizations", organizations_path %></li>
+                        <li><%= link_to "Car Makes", makes_path %></li>
+                        <li><%= link_to "Car Models", models_path %></li>
                       </ul>
                     </li>
                   <% end %>

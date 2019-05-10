@@ -3,16 +3,22 @@
   <%= f.input :name %>
   <%= f.label "icon:" %>
   <% if f.object.icon.present? %>
+    <% if f.object.icon.set == 'ionic' %>
     <span class="icon-span">
-      <ion-icon name="<%= f.object.icon %>" style="font-size:30px;"></ion-icon>(<%= f.object.icon %>)
+      <ion-icon name="<%= f.object.icon.name %>" style="font-size:30px;"></ion-icon>(<%= f.object.icon.name %>)
     </span>
+    <% elsif f.object.icon.set == 'fontawesome' %>
+    <span class="icon-span">
+      <i class="fa <%=f.object.icon.name%>" style="font-size:30px;"></i>(<%= f.object.icon.name %>)
+    </span>      
+    <% end %>
   <% else %>
     <span class="icon-span">
      (none)
     </span>
   <% end %>
   <%= link_to 'Select Icon', modal_icon_select_path,  {:remote => true}  %>
-  <%= f.input :icon, as: :hidden %>
-  <%= f.association :users, collection: @users, as: :check_boxes, label_method: :full_name %>
+  <%= f.input :icon_id, as: :hidden %>
+  <%= f.association :users, collection: @users, as: :check_boxes, label_method: :first_name %>
   <%= f.submit :submit, class:"btn btn-space btn-primary" %>
 <% end %>

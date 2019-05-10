@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     end
     resources :groups do
       resources :departments
+      resources :makes
     end
     resources :basic_forms
     resources :customers
@@ -27,6 +28,12 @@ Rails.application.routes.draw do
     resources :pages
     post '/cars/scrape/' => 'cars#scrape'
   end
+
+ #this is make and modals which are not per org but global and the same across all organizations
+  resources :makes do 
+    resources :models 
+  end
+  get 'models/' => 'models#index'
 
   namespace :api do
     namespace :v1 do

@@ -97,11 +97,6 @@ class CarsController < ApplicationController
             car.stock_number = vehicle.css('div.vinstock span:nth-child(2)').text.strip.chomp.sub('STOCK #: ', '')
             car.finance_payment = vehicle.css('div.finance span.price').text.strip.chomp.delete('$,').to_i
             car.lease_payment = vehicle.css('div.leasepayment span.price').text.strip.chomp.delete('$,').to_i
-            # car.engine = vehicle.css('div.options ul li:nth-child(1) span.detail-content').text.strip.chomp
-            # car.transmission = vehicle.css('div.options ul li:nth-child(2) span.detail-content').text.strip.chomp
-            # car.drivetrain = vehicle.css('div.options ul li:nth-child(3) span.detail-content').text.strip.chomp
-            # car.exterior = vehicle.css('div.options ul li:nth-child(4) span.detail-content').text.strip.chomp
-            # car.interior = vehicle.css('div.options ul li:nth-child(5) span.detail-content').text.strip.chomp
             car.hwy_mpg = vehicle.css('div.options ul li:nth-child(6) span:nth-child(2)').text.strip.chomp.delete('MPG')
             car.city_mpg = vehicle.css('div.options ul li:nth-child(6) span.detail-content:nth-child(4)').text.strip.chomp.delete('MPG')
             car.main_image = vehicle.css('div.vehicle-leftcol div.vehicle-image img').attr('data-src')
@@ -130,6 +125,7 @@ class CarsController < ApplicationController
             car.group_id = gid
             car.year = set_year(car.title)
             car.model = set_model(car.title)
+            car.make = set_make(car.title)
             car.save
             new_cars_ids.push(car.id)
           end
@@ -234,87 +230,19 @@ class CarsController < ApplicationController
   end
   
   def set_model(title)
-    models = ["CLA 250",
-      "GLA 250",
-      "Sprinter 2500 Cargo Van",
-      "C 300",
-      "GLC 300",
-      "Sprinter Extended Cargo Van",
-      "GLE 350",
-      "E 300",
-      "GLC 43",
-      "E 450",
-      "E 400",
-      "GLS 450",
-      "E 43",
-      "S-Class",
-      "Metris Cargo Van",
-      "Metris Passenger Van",
-      "Sprinter Cargo Van",
-      "Sprinter 4500 Cargo Van",
-      "GLC 350",
-      "Sprinter 2500 Passenger Van",
-      "Sprinter 2500 Crew Van",
-      "C 43",
-      "E 53",
-      "E 63",
-      "SL 450",
-      "GLS 63",
-      "GLC 63",
-      "S 560",
-      "CLS 450",
-      "GLS 550",
-      "S 450",
-      "S 560",
-      "CLS 63S",
-      "G 63",
-      "GT C Roadster",
-      "C 250",
-      'S 550',
-      'CLS 550',
-      'G 65',      
-      'H2',
-      'Tundra', 
-      'Tacoma',
-      'Camaro',      
-      'Accord',
-      '1500',
-      'Enclave',              
-      'Denali',              
-      'Trailhawk',              
-      'Impreza',              
-      'Avalon',              
-      'Traverse',              
-      'Escape',              
-      'CR-V',              
-      'Prius',              
-      'XC70',              
-      'Charger',                         
-      'ES 350',              
-      '2500',              
-      'Crosstrek',              
-      'Outback',              
-      'Corolla',              
-      'RAV4',              
-      'Explorer',              
-      'Terrain',              
-      'Sonata',              
-      'Wrangler',              
-      'Frontier',              
-      'Model S',              
-      'Camry',              
-      'S90',              
-      'Journey',              
-      'civic',              
-      'Optima',              
-      'Altima',              
-      'Forester',              
-      'Legacy',              
-      'Veloster',              
-      'S60',              
-      "E 350"]
-      models.map!(&:downcase)
-     r = Regexp.union models 
+    models = Model.all.pluck(:name)
+    models.map!(&:downcase)
+    r = Regexp.union models 
+    if title.downcase.match? r
+      str = title.downcase.match r
+      return str[0]
+    end
+  end
+
+  def set_make(title)
+    makes = Make.all.pluck(:name)
+    makes.map!(&:downcase)
+    r = Regexp.union makes 
     if title.downcase.match? r
       str = title.downcase.match r
       return str[0]

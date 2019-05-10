@@ -4,8 +4,13 @@ $("#globalModal").modal();
 
 $('a.icon-pick').click(function(e){
   e.preventDefault();
-  var i = $(this).data('name');
-  $("#department_icon").val(i);
-  $("span.icon-span").html('<ion-icon name="'+i+'" style="font-size:30px;"></ion-icon>('+i+') ')
+  var id = $(this).data('id');
+  var name = $(this).data('name');
+  var set = $(this).data('set')
+  $("#department_icon_id").val(id);
+  if(set == 'ionic')
+    $("span.icon-span").html('<ion-icon name="'+name+'" style="font-size:30px;"></ion-icon>('+name+')')
+  if(set == 'fontawesome')
+    $("span.icon-span").html('<i class="fa '+name+'" style="font-size:30px;"></i>('+name+')')
   $("#globalModal").modal("hide");
 });
