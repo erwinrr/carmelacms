@@ -1,6 +1,6 @@
 class CarsController < ApplicationController
   before_action :set_car, only: [:show, :edit, :update, :destroy]
-  before_action :set_organization, except: :scrape
+  before_action :set_organization, except: [:scrape, :unknown]
   skip_before_action :verify_authenticity_token, only: :scrape
   skip_before_action :authenticate_user!, only: :scrape
   # GET /cars
@@ -239,6 +239,7 @@ class CarsController < ApplicationController
     end
   end
 
+
   def set_make(title)
     makes = Make.all.pluck(:name)
     makes.map!(&:downcase)
@@ -247,6 +248,12 @@ class CarsController < ApplicationController
       str = title.downcase.match r
       return str[0]
     end
+  end
+
+  def unknown 
+    @organization = current_user.organizations.first
+    @unknown_makes = Car.all.where(make:nil)
+    @unknown_models = Car.all.where(model:nil)
   end
 
   private

@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       resource :like, module: :cars
       collection do 
         get 'models/' => 'cars#models'
+        get 'unknown' => 'cars#unknown'
       end
     end
     resources :locations
