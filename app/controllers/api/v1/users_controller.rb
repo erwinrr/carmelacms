@@ -7,7 +7,10 @@ class Api::V1::UsersController < ApplicationController
     @user.session_token = SecureRandom.urlsafe_base64
     @user.add_role :customer
     @group = Group.find(params[:group_id])
-    if @user.save && @user.groups << @group && CustomerProfile.create(user_id: @user.id)
+    @entry = Entry.new
+    @entry.full_name = params[:signup_entry]
+    @entry.entry_type = 'signup'
+    if @user.save && @user.groups << @group && CustomerProfile.create(user_id: @user.id) && @entry.save
       render json: {'created': true}, status: :created
     else
       render json: {'created': false, 'errors': @user.errors}, status: :unprocessable_entity
